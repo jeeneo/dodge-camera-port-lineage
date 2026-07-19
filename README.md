@@ -107,7 +107,7 @@ Navigate back to repos root: `cd ../../../`
 
 Inside `build/soong/scripts/check_boot_jars/package_allowed_list.txt`
 
-Find `# OPLUS adds`:
+Find `# OPLUS adds` and insert:
 
 ```
 # OPLUS adds

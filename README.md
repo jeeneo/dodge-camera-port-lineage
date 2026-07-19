@@ -202,11 +202,65 @@ neverallow { domain -hal_camera_server } vendor_hal_offlinecamera_service:servic
 neverallow { domain -hal_camera_client -hal_camera_server -opluscamera_app -traceur_app -atrace -shell -system_app } vendor_hal_offlinecamera_service:service_manager find;
 ```
 
-These allow the camera service to properly read and export photos.
+Then navigate to `system/sepolicy` and run this to patch another SEPolicy:
+
+```sh
+git apply <<'EOF'
+diff --git a/private/init.te b/private/init.te
+index 31c4103bf..aa0dea653 100644
+--- a/private/init.te
++++ b/private/init.te
+@@ -337,6 +337,7 @@ allow init {
+   -system_dlkm_file_type
+   -system_file_type
+   -vendor_file_type
++  -proc_type
+ }:dir { create search getattr open read setattr ioctl };
+ 
+ allow init {
+@@ -364,6 +365,7 @@ allow init {
+   -vendor_file_type
+   -vendor_userdir_file
+   -vold_data_file
++  -proc_type
+ }:dir { write add_name remove_name rmdir relabelfrom };
+ 
+ allow init {
+@@ -504,6 +506,7 @@ allow init {
+   -sdcard_type
+   -fusefs_type
+   -rootfs
++  -proc_type
+ }:dir { open read setattr search };
+ 
+ allow init {
+diff --git a/private/vendor_init.te b/private/vendor_init.te
+index 295803b45..d1792931e 100644
+--- a/private/vendor_init.te
++++ b/private/vendor_init.te
+@@ -93,6 +93,7 @@ allow vendor_init {
+   -aconfig_storage_metadata_file
+   -aconfig_storage_flags_metadata_file
+   -statsd_atoms_list_file
++  -proc_type
+ }:dir { create search getattr open read setattr ioctl write add_name remove_name rmdir relabelfrom };
+ 
+ allow vendor_init unlabeled:{ dir notdevfile_class_set } { getattr relabelfrom };
+@@ -214,6 +215,7 @@ allow vendor_init {
+   -proc_uid_time_in_state
+   -proc_uid_concurrent_active_time
+   -proc_uid_concurrent_policy_time
++  -proc_type
+ }:dir { open read setattr search };
+ 
+ allow vendor_init dev_type:blk_file getattr;
+EOF
+```
 
 The following patches are automatic cherry-picking of upstreams fixes for Android's framework:
 
 ```sh
+cd ../..
 cd frameworks/av
 git checkout -b camera-port-patches
 

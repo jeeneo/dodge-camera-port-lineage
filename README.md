@@ -255,6 +255,9 @@ And in `base/Android.bp` look for the line `name: "framework-minus-apex-headers"
 After this is done, you should be good to build:
 
 ```sh
+# back to lineage root
+cd ../../
+
 source build/envsetup.sh
 croot
 breakfast dodge

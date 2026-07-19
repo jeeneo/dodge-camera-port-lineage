@@ -2,12 +2,17 @@
 
 **Full credit to the [dodge-camera-port](https://github.com/dodge-camera-port) team and LineageOS maintainers for this device, I am not doing anything besides just putting peices together that somehow work.**
 
-NOTE: This guide assumes you know midrange knowledge on Linux and the Android build system (not really for beginners) and have a decent PC to build on. I have 32gb ram+swap w/ Ryzen 9 270 and on an NVME, a cold-build takes me ~3 hours, but successive builds are much faster. You'll need about ~360gb of free space and decent internet bandwith.
+Building LineageOS w/ OnePlus Camera for dodge (CPH2655)
+
+<details>
+<summary>additional info</summary>
+This guide assumes you know midrange knowledge on Linux and the Android build system (not really for beginners) and have a decent PC to build on. I have 32gb ram+swap w/ Ryzen 9 270 and on an NVME, a cold-build takes me ~3 hours, but successive builds are much faster. You'll need about ~360gb of free space and decent internet bandwith.
 
 I won't be explaining how to set up a built environment past the usual `repo sync` LineageOS baseline and adding the Camera on top.
 You can follow [Lineage's build guide](https://wiki.lineageos.org/devices/dodge/build) to do everything leading up to it.
 
-This is meant to be an internal guide for me to understand the flow on how to patch Lineage's trees with the camera to keep the changes minimal to apply additional fixes from [upstream](https://github.com/dodge-camera-port) and to Lineage. I am not an expert by any means, it's been a while since I've done this.
+This is meant to be a guide for me to understand the flow on how to patch Lineage's trees with the camera to keep the changes minimal to apply additional fixes from [upstream](https://github.com/dodge-camera-port) and to Lineage. I am not an expert by any means, it's been a while since I've done this.
+</details>
 
 Please read this guide all the way through before acting on it.
 
@@ -255,3 +260,5 @@ croot
 breakfast dodge
 brunch dodge
 ```
+
+If successful, the built rom will be inside `out/target/product/dodge`.

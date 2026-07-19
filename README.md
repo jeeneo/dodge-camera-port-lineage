@@ -14,15 +14,15 @@ Please read this guide all the way through before acting on it.
 ----
 For NixOS:
 
-My build system I've created `shell.nix` (which is a modified version of https://gist.github.com/Arian04/bea169c987d46a7f51c63a68bc117472) to setup a FHS shell for building. 
+I use a modified `shell.nix` to setup a FHS compatible shell.
 
-Inside wherever you put `shell.nix`: 
+Inside wherever you put the `shell.nix` in this repo:
 
 ```sh
 nix-shell --pure && cd <lineage root>
 ```
 
-If you're using nix, ccache is placed inside `/tmp/ccache`, you can delete this if not needed, or disable ccache completely.
+ccache is placed inside `/tmp/ccache`, you can delete this if not needed, or disable ccache completely.
 
 ----
 

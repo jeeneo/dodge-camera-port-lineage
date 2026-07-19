@@ -74,7 +74,10 @@
     runScript = "${pkgs.bash}/bin/bash";
     profile = ''
       export ALLOW_NINJA_ENV=true
+
+      # set to 0 to disable ccache
       export USE_CCACHE=1
+
       export CCACHE_EXEC=/usr/bin/ccache
       export ANDROID_JAVA_HOME=${pkgs.jdk11.home}
       export TMPDIR=/tmp
@@ -82,8 +85,10 @@
       export SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
       export GIT_SSL_CAINFO=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
       export CURL_CA_BUNDLE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
+
       mkdir -p /tmp/ccache
       export CCACHE_DIR=/tmp/ccache
+
       git lfs install
 
       # cd lineage

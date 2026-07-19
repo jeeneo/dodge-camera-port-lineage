@@ -12,11 +12,9 @@ I won't be explaining how to set up a built environment past the usual `repo syn
 You can follow [Lineage's build guide](https://wiki.lineageos.org/devices/dodge/build) to do everything leading up to it.
 
 This is meant to be a guide for me to understand the flow on how to patch Lineage's trees with the camera to keep the changes minimal to apply additional fixes from [upstream](https://github.com/dodge-camera-port) and to Lineage. I am not an expert by any means, it's been a while since I've done this.
-</details>
-
-Please read this guide all the way through before acting on it.
 
 ----
+
 For NixOS:
 
 I use a modified `shell.nix` to setup a FHS compatible shell.
@@ -30,6 +28,10 @@ nix-shell --pure && cd <lineage root>
 ccache is placed inside `/tmp/ccache`, you can delete this if not needed, or disable ccache completely.
 
 ----
+
+</details>
+
+Please read this guide all the way through before acting on it.
 
 ### Preparing device trees:
 
@@ -136,7 +138,11 @@ In `device/oneplus/dodge/lineage_dodge.mk`, remove/comment out:
 $(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
 ```
 
+This disables needing to pull in gapps
+
 In: `device/oneplus/sm8750-common/BoardConfigCommon.mk`, look for `SEPolicy`, add:
+
+SELinux Policies:
 
 ```
 # SEPolicy
@@ -195,6 +201,8 @@ add_service(hal_camera_server, vendor_hal_offlinecamera_service)
 neverallow { domain -hal_camera_server } vendor_hal_offlinecamera_service:service_manager add;
 neverallow { domain -hal_camera_client -hal_camera_server -opluscamera_app -traceur_app -atrace -shell -system_app } vendor_hal_offlinecamera_service:service_manager find;
 ```
+
+These allow the camera service to properly read and export photos.
 
 The following patches are automatic cherry-picking of upstreams fixes for Android's framework:
 

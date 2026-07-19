@@ -23,6 +23,7 @@ nix-shell --pure && cd <lineage root>
 ```
 
 If you're using nix, ccache is placed inside `/tmp/ccache`, you can delete this if not needed, or disable ccache completely.
+
 ----
 
 ### Preparing device trees:

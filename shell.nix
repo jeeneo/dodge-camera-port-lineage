@@ -1,14 +1,11 @@
 # I used this shell.nix to build LineageOS 23.2 for dodge (OnePlus 13)
 #
-# IMPORANT NOTE: I had to use a pure shell for my builds to work, i.e: `nix-shell --pure` rather than `nix-shell`
+# IMPORANT NOTE: I used a pure shell for my builds, i.e: `nix-shell --pure` rather than `nix-shell`
 #
-# The build instructions are here: https://wiki.lineageos.org/devices/redfin/build
-#
-# Warning (from forked gist, was added August 1st 2018):
-# The hardened NixOS kernel disables 32 bit emulation, which made me run into multiple "Exec format error" errors.
-# To fix, use the default kernel, or enable "IA32_EMULATION y" in the kernel config.
-#
-# Created using:
+# The build instructions are here: https://wiki.lineageos.org/devices/dodge/build and here: https://github.com/jeeneo/dodge-camera-port-lineage
+
+# History:
+#   https://gist.github.com/Arian04/bea169c987d46a7f51c63a68bc117472
 #   https://gist.github.com/Nadrieril/d006c0d9784ba7eff0b092796d78eb2a
 #   https://nixos.wiki/wiki/Android#Building_Android_on_NixOS
 

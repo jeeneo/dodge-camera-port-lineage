@@ -256,7 +256,7 @@ After this is done, you should be good to build:
 
 ```sh
 # back to lineage root
-cd ../../
+cd ..
 
 source build/envsetup.sh
 croot

@@ -114,15 +114,15 @@ Navigate back to repos root: `cd ../../../`
 
 Inside `build/soong/scripts/check_boot_jars/package_allowed_list.txt`
 
-Find `# OPLUS adds` and insert:
+Find `# OPLUS adds` and rceplace the block with:
 
 ```
 # OPLUS adds
 com\.oplus\..*
-oplus\..* # add
-com\.color\..* # add
-net\.oneplus\..* # add
-vendor\.oplus\..* # add
+oplus\..*
+com\.color\..*
+net\.oneplus\..*
+vendor\.oplus\..*
 ```
 
 In `device/oneplus/dodge/device.mk`, remove/comment out:

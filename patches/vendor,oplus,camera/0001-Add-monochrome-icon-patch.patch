@@ -30,7 +30,7 @@ index 0000000..a447c20
 +   xmlns:android="http://schemas.android.com/apk/res/android">
 +     <background android:drawable="@mipmap/ic_launcher_background" />
 +     <foreground android:drawable="@mipmap/ic_launcher_foreground" />
-++    <foreground android:drawable="@drawable/ic_launcher_monochrome" />
+++    <monochrome android:drawable="@drawable/ic_launcher_monochrome" />
 + </adaptive-icon>
 +\ No newline at end of file
 +diff --git a/res/values/public.xml b/res/values/public.xml

@@ -1,3 +1,15 @@
+diff --git a/build/soong/service_fuzzer_bindings.go b/build/soong/service_fuzzer_bindings.go
+index cb5e61fa8..938a65a4f 100644
+--- a/build/soong/service_fuzzer_bindings.go
++++ b/build/soong/service_fuzzer_bindings.go
+@@ -341,6 +341,7 @@ var (
+ 		"isub":                                   EXCEPTION_NO_FUZZER,
+ 		"jobscheduler":                           EXCEPTION_NO_FUZZER,
+ 		"launcherapps":                           EXCEPTION_NO_FUZZER,
++		"linearmotor":                            EXCEPTION_NO_FUZZER,
+ 		"legacy_permission":                      EXCEPTION_NO_FUZZER,
+ 		"lights":                                 EXCEPTION_NO_FUZZER,
+ 		"locale":                                 EXCEPTION_NO_FUZZER,
 diff --git a/private/init.te b/private/init.te
 index 31c4103bf..aa0dea653 100644
 --- a/private/init.te
@@ -26,6 +38,16 @@ index 31c4103bf..aa0dea653 100644
  }:dir { open read setattr search };
  
  allow init {
+diff --git a/private/service_contexts b/private/service_contexts
+index 84304c065..07f699072 100644
+--- a/private/service_contexts
++++ b/private/service_contexts
+@@ -542,4 +542,5 @@ wifirtt                                   u:object_r:rttmanager_service:s0
+ wifi_usd                                  u:object_r:wifi_usd_service:s0
+ wifi_mainline_supplicant                  u:object_r:wifi_mainline_supplicant_service:s0
+ window                                    u:object_r:window_service:s0
++linearmotor                               u:object_r:vibrator_service:s0
+ *                                         u:object_r:default_android_service:s0
 diff --git a/private/vendor_init.te b/private/vendor_init.te
 index 295803b45..d1792931e 100644
 --- a/private/vendor_init.te

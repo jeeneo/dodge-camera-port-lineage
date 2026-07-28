@@ -1,3 +1,3 @@
-<img src="assets/ext.svg" width="1000">
+<img src="assets/ext.svg" width="700">
 
 ### LineageOS with OnePlus Camera (unofficial)

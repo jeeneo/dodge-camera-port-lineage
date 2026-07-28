@@ -1,0 +1,106 @@
+diff --git a/Android.bp b/Android.bp
+index 939c2417a627..a9e0434246f0 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -465,6 +465,7 @@ java_defaults {
+     defaults: ["framework-minus-apex-defaults"],
+     libs: [
+         "framework-non-updatable-unbundled-impl-libs",
++        "oplus-fwk-vibrator-lib",
+     ],
+ }
+ 
+@@ -496,6 +497,7 @@ java_library {
+     apex_available: ["//apex_available:platform"],
+     visibility: [
+         "//frameworks/base:__subpackages__",
++        "//hardware/oplus/oplus-fwk",
+         "//packages/modules/NeuralNetworks:__subpackages__",
+         // TODO(b/429127828): Clean this up along with RELEASE_TELEPHONY_MODULE
+         "//packages/modules/Telephony/framework:__subpackages__",
+diff --git a/core/java/android/app/SystemServiceRegistry.java b/core/java/android/app/SystemServiceRegistry.java
+index 60a938d70184..0b0e8f0d8aef 100644
+--- a/core/java/android/app/SystemServiceRegistry.java
++++ b/core/java/android/app/SystemServiceRegistry.java
+@@ -236,6 +236,9 @@ import android.permission.PermissionManager;
+ import android.print.IPrintManager;
+ import android.print.PrintManager;
+ import android.provider.E2eeContactKeysManager;
++
++import com.oplus.os.ILinearmotorVibratorService;
++import com.oplus.os.LinearmotorVibrator;
+ import android.provider.ProviderFrameworkInitializer;
+ import android.ranging.RangingFrameworkInitializer;
+ import android.ravenwood.annotation.RavenwoodKeep;
+@@ -1854,6 +1857,15 @@ public final class SystemServiceRegistry {
+                         return new E2eeContactKeysManager(ctx);
+                     }});
+ 
++        registerService(Context.LINEARMOTOR_VIBRATOR_SERVICE, LinearmotorVibrator.class,
++                new CachedServiceFetcher<LinearmotorVibrator>() {
++                    @Override
++                    public LinearmotorVibrator createService(ContextImpl ctx) {
++                        IBinder binder = ServiceManager.getService(Context.LINEARMOTOR_VIBRATOR_SERVICE);
++                        ILinearmotorVibratorService service = ILinearmotorVibratorService.Stub.asInterface(binder);
++                        return new LinearmotorVibrator(ctx.getOuterContext(), service);
++                    }});
++
+         registerService(Context.SUPERVISION_SERVICE, SupervisionManager.class,
+                 new CachedServiceFetcher<>() {
+                     @Override
+diff --git a/core/java/android/content/Context.java b/core/java/android/content/Context.java
+index f41e6a1d4725..2dacfade56c4 100644
+--- a/core/java/android/content/Context.java
++++ b/core/java/android/content/Context.java
+@@ -7163,6 +7163,16 @@ public abstract class Context {
+     @RequiresFeature(PackageManager.FEATURE_WEBVIEW)
+     public static final String WEBVIEW_UPDATE_SERVICE = "webviewupdate";
+ 
++    /**
++     * Use with {@link #getSystemService} to retrieve a
++     * {@link com.oplus.os.LinearmotorVibrator} for accessing linear motor vibrator state.
++     *
++     * @hide
++     * @see #getSystemService
++     * @see com.oplus.os.LinearmotorVibrator
++     */
++    public static final String LINEARMOTOR_VIBRATOR_SERVICE = "linearmotor";
++
+     /**
+      * Use with {@link #getSystemService(String)} to retrieve a
+      * {@link android.provider.BlockedNumbersManager} for accessing the blocked number service.
+diff --git a/services/core/Android.bp b/services/core/Android.bp
+index e08be355a068..734ec99e9e06 100644
+--- a/services/core/Android.bp
++++ b/services/core/Android.bp
+@@ -162,6 +162,7 @@ java_library_static {
+         "framework-tethering.stubs.module_lib",
+         "keepanno-annotations",
+         "monet",
++        "oplus-fwk-vibrator-lib",
+         "power_hint_flags_lib",
+         "service-art.stubs.system_server",
+         "service-permission.stubs.system_server",
+diff --git a/services/java/com/android/server/SystemServer.java b/services/java/com/android/server/SystemServer.java
+index a184d6a7efe8..cf9e8662ac23 100644
+--- a/services/java/com/android/server/SystemServer.java
++++ b/services/java/com/android/server/SystemServer.java
+@@ -306,6 +306,7 @@ import com.android.server.usb.UsbService;
+ import com.android.server.userrecovery.UserRecoveryManagerService;
+ import com.android.server.utils.TimingsTraceAndSlog;
+ import com.android.server.vcn.VcnLocation;
++import com.android.server.vibrator.LinearmotorVibratorService;
+ import com.android.server.vibrator.VibratorManagerService;
+ import com.android.server.voiceinteraction.VoiceInteractionManagerService;
+ import com.android.server.wallpaper.WallpaperManagerService;
+@@ -2865,6 +2866,10 @@ public final class SystemServer implements Dumpable {
+             }
+         }
+ 
++        t.traceBegin("StartLinearmotorVibratorService");
++        mSystemServiceManager.startService(LinearmotorVibratorService.class);
++        t.traceEnd();
++
+         t.traceBegin("StartMediaProjectionManager");
+         mSystemServiceManager.startService(MediaProjectionManagerService.class);
+         t.traceEnd();

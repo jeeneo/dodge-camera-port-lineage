@@ -1,0 +1,15 @@
+diff --git a/scripts/check_boot_jars/package_allowed_list.txt b/scripts/check_boot_jars/package_allowed_list.txt
+index 95fe0b3d2..e646569ce 100644
+--- a/scripts/check_boot_jars/package_allowed_list.txt
++++ b/scripts/check_boot_jars/package_allowed_list.txt
+@@ -291,6 +291,10 @@ com\.nvidia\..*
+ 
+ # OPLUS adds
+ com\.oplus\..*
++oplus\..*
++com\.color\..*
++net\.oneplus\..*
++vendor\.oplus\..*
+ 
+ # QC adds
+ com.qualcomm.qti

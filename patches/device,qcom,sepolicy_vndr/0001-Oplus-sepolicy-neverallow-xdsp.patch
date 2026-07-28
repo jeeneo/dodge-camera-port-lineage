@@ -1,0 +1,35 @@
+diff --git a/sm8750/generic/vendor/common/domain.te b/sm8750/generic/vendor/common/domain.te
+index 6811cfe1f..6a3e82264 100644
+--- a/sm8750/generic/vendor/common/domain.te
++++ b/sm8750/generic/vendor/common/domain.te
+@@ -88,13 +88,14 @@ neverallow { domain
+ - hal_sensors_default
+ - hal_camera_default
+ - hal_audio_default
++- opluscamera_app
+ userdebug_or_eng(` -vendor_usta_app')
+ userdebug_or_eng(` -vendor_ustaservice_app')
+ userdebug_or_eng(` -vendor_sysmonapp_app_test')
+ userdebug_or_eng(` -vendor_snapcam_app')
+ }vendor_xdsp_device:chr_file *;
+ 
+-neverallow { domain -init -vendor_init - ueventd } vendor_xdsp_device:chr_file ~{r_file_perms};
++neverallow { domain -init -vendor_init - ueventd -opluscamera_app } vendor_xdsp_device:chr_file ~{r_file_perms};
+ 
+ neverallow { domain
+ - init
+diff --git a/sm8750/generic/vendor/common/hal_camera.te b/sm8750/generic/vendor/common/hal_camera.te
+index 1de8bacf4..cc4db070f 100644
+--- a/sm8750/generic/vendor/common/hal_camera.te
++++ b/sm8750/generic/vendor/common/hal_camera.te
+@@ -89,7 +89,9 @@ userdebug_or_eng(`
+ binder_use(hal_camera_default)
+ 
+ # Offline camera service access
+-hal_attribute_service(hal_camera, vendor_hal_offlinecamera_service)
++add_service(hal_camera_server, vendor_hal_offlinecamera_service)
++neverallow { domain -hal_camera_server } vendor_hal_offlinecamera_service:service_manager add;
++neverallow { domain -hal_camera_client -hal_camera_server -opluscamera_app -traceur_app -atrace -shell -system_app } vendor_hal_offlinecamera_service:service_manager find;
+ 
+ # AON AIDL service access
+ hal_attribute_service(hal_camera, vendor_hal_camera_aon_service)

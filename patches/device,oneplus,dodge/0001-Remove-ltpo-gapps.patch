@@ -1,0 +1,27 @@
+diff --git a/device.mk b/device.mk
+index 86d294f..17b9dc5 100644
+--- a/device.mk
++++ b/device.mk
+@@ -23,8 +23,8 @@ TARGET_SCREEN_HEIGHT := 3168
+ TARGET_SCREEN_WIDTH := 1440
+ 
+ # Display
+-PRODUCT_PACKAGES += \
+-    OplusLtpo
++# PRODUCT_PACKAGES += \
++#     OplusLtpo
+ 
+ PRODUCT_COPY_FILES += \
+     $(LOCAL_PATH)/configs/display/displayconfig.xml:$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig/display_id_4630946756802996883.xml
+ 
+diff --git a/lineage_dodge.mk b/lineage_dodge.mk
+index 2694986..fcac4e5 100644
+--- a/lineage_dodge.mk
++++ b/lineage_dodge.mk
+@@ -29,6 +29,3 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
+     DeviceProduct=CPH2653 \
+     SystemDevice=OP5D55L1 \
+     SystemName=CPH2653
+-
+-
+-$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)

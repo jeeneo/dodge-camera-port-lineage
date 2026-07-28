@@ -1,0 +1,12 @@
+diff --git a/BoardConfigCommon.mk b/BoardConfigCommon.mk
+index 47aa8a7..e69e6ee 100644
+--- a/BoardConfigCommon.mk
++++ b/BoardConfigCommon.mk
+@@ -222,6 +222,7 @@ BOOT_SECURITY_PATCH := 2026-06-01
+ VENDOR_SECURITY_PATCH := $(BOOT_SECURITY_PATCH)
+ 
+ # SEPolicy
++include device/lineage/sepolicy/qcom/sepolicy.mk
+ include device/qcom/sepolicy_vndr/SEPolicy.mk
+ include hardware/oplus/sepolicy/qti/SEPolicy.mk
+ 

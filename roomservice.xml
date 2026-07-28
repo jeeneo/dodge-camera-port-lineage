@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="dodge-camera-port" fetch="https://github.com/dodge-camera-port/" />
+
+  <project path="device/oneplus/dodge" name="android_device_oneplus_dodge" remote="dodge-camera-port" revision="16.0" />
+  <project path="device/oneplus/sm8750-common" name="LineageOS/android_device_oneplus_sm8750-common" remote="github" revision="lineage-23.2" />
+  <project path="device/qcom/sepolicy_vndr" name="LineageOS/android_device_qcom_sepolicy_vndr" remote="github" revision="lineage-23.2-caf-sm8750" />
+  
+  <remove-project path="frameworks/av" />
+  <project path="frameworks/av" name="jeeneo/android_frameworks_av" remote="github" revision="camera-fixes" />
+
+  <project path="hardware/oplus" name="android_hardware_oplus" remote="dodge-camera-port" revision="16.0" />
+  
+  <project path="vendor/oneplus/dodge" name="proprietary_vendor_oneplus_dodge" remote="dodge-camera-port" revision="lineage-23.2" />
+  <project path="vendor/oneplus/sm8750-common" name="proprietary_vendor_oneplus_sm8750-common" remote="dodge-camera-port" revision="lineage-23.2" />
+  <project path="vendor/oplus/camera" name="vendor_oplus_camera" remote="dodge-camera-port" revision="A16" />
+  
+  <project path="kernel/oneplus/sm8750" remote="github" name="LineageOS/android_kernel_oneplus_sm8750" />
+  <project path="kernel/oneplus/sm8750-devicetrees" remote="github" name="LineageOS/android_kernel_oneplus_sm8750-devicetrees" />
+  <project path="kernel/oneplus/sm8750-modules" remote="github" name="LineageOS/android_kernel_oneplus_sm8750-modules" />
+  
+</manifest>

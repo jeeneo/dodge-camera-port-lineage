@@ -1,13 +1,13 @@
-# I used this shell.nix to build LineageOS 23.2 for dodge (OnePlus 13)
 #
-# IMPORANT NOTE: I used a pure shell for my builds, i.e: `nix-shell --pure` rather than `nix-shell`
+# This shell.nix was used to build LineageOS 23.2 for dodge (OnePlus 13)
 #
 # The build instructions are here: https://wiki.lineageos.org/devices/dodge/build and here: https://github.com/jeeneo/dodge-camera-port-lineage
-
+#
 # History:
 #   https://gist.github.com/Arian04/bea169c987d46a7f51c63a68bc117472
 #   https://gist.github.com/Nadrieril/d006c0d9784ba7eff0b092796d78eb2a
 #   https://nixos.wiki/wiki/Android#Building_Android_on_NixOS
+#
 
 {pkgs ? import <nixpkgs> {}}: let
   fhs = pkgs.buildFHSEnv {
@@ -77,6 +77,8 @@
 
       # set to 0 to disable ccache
       export USE_CCACHE=1
+      mkdir -p /tmp/ccache
+      export CCACHE_DIR=/tmp/ccache
 
       export CCACHE_EXEC=/usr/bin/ccache
       export ANDROID_JAVA_HOME=${pkgs.jdk11.home}
@@ -86,14 +88,10 @@
       export GIT_SSL_CAINFO=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
       export CURL_CA_BUNDLE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
 
-      mkdir -p /tmp/ccache
-      export CCACHE_DIR=/tmp/ccache
-
       git lfs install
 
       # cd lineage
-      echo "source build/envsetup.sh"
-      # croot
+      echo 'run "source build/envsetup.sh"'
     '';
   };
 in
